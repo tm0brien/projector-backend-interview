@@ -1,0 +1,32 @@
+<html>
+    <title>Fictional App</title>
+<body>
+    
+    <p>
+        Welcome to our app <span id="firstName"></span>!
+    </p>
+    <img id="avatar" width="256" height="256" src="/v1/avatar">
+    <p>
+        <p>Need a change? Visit the <a href="/settings">settings</a> page.</p>
+        <p>All done? <a href="/v1/signout">Sign out</a>.</p>
+    </p>
+
+    <script type="text/javascript">
+        // fetch the user's details
+        fetch("/v1/user", {
+            // include credentials (i.e. cookies)
+            credentials: 'include'
+        }).then(response => {
+            if( !response.ok ) {
+                // if there was an error, navigate back to the home page
+                window.location.href = "/"
+            } else {
+                // if things worked out, parse the JSON and update the page
+                response.json().then(body => {
+                    document.getElementById("firstName").textContent = body.firstName
+                })
+            }
+        })
+    </script>
+</body>
+</html>

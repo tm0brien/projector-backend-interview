@@ -1,0 +1,82 @@
+<html>
+    <title>Settings</title>
+<body>
+    <label for="oldPassword">Old Password:</label>
+    <input type="text" id="oldPassword" name="oldPassword" type="password"><br><br>
+    <label for="newPassword">New Password:</label>
+    <input type="text" id="newPassword" name="newPassword" type="password"><br><br>
+    <button onclick="changePassword()">Change password</button><br><br>
+    <p>Drag your avatar here:</p>
+    <div id="drop_zone" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
+        <img id="avatar" width="256" height="256">
+    </div><br>
+    <button id="upload" style="display:none;" onclick="uploadAvatar()">Upload avatar</button><br><br>
+    <label id="error"></label>
+    <a href="/app">Go back</a> to the app.
+    <script type="text/javascript">
+        var avatarFile
+        // the change password handler
+        function changePassword() {
+            // clear the error text
+            document.getElementById("error").textContent = ""
+            // obtain the the password values the user entered
+            var oldPassword = document.getElementById("oldPassword").value
+            var newPassword = document.getElementById("newPassword").value
+            // POST to the password endpoint
+            fetch("/v1/password", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify({
+                    oldPassword,
+                    newPassword
+                })
+            }).then(response => {
+                if( !response.ok ) {
+                    // if call failed, display the error
+                    response.text().then(value => {
+                        document.getElementById("error").textContent = value
+                    })                    
+                } else {
+                    // otherwise, navigate to the app
+                    window.location.href = "/app"
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+        function uploadAvatar() {
+            // POST to the avatar endpoint
+            fetch("/v1/avatar", {
+                method: "POST",
+                body: avatarFile
+            }).then(response => {
+                if( !response.ok ) {
+                    // if call failed, display the error
+                    response.text().then(value => {
+                        document.getElementById("error").textContent = value
+                    })                    
+                } else {
+                    // otherwise, navigate to the app
+                    window.location.href = "/app"
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+        function dropHandler(event) {
+            // prevent default behavior
+            event.preventDefault()
+            avatarFile = event.dataTransfer.files[0]
+            var imageUrl = URL.createObjectURL(avatarFile)
+            document.getElementById("avatar").src = imageUrl
+            document.getElementById("upload").style = ""
+        } 
+        function dragOverHandler(event) {
+            // prevent default behavior
+            event.preventDefault()
+        } 
+    </script>
+</body>
+</html>

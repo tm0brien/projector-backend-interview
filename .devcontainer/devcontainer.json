@@ -1,0 +1,26 @@
+{
+	"name": "Projector Backend Interview",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+
+	"mounts": [ 
+		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
+		"source=${localEnv:HOME},target=/home,type=bind,consistency=delegated",
+	],
+
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
+	"workspaceFolder": "/workspace",
+
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/bash"
+	},
+
+	"extensions": [
+		"ms-azuretools.vscode-docker",
+		"mutantdino.resourcemonitor",
+		"dbaeumer.vscode-eslint",
+		"eamodio.gitlens",
+	],
+
+	"forwardPorts": [9090],	
+}

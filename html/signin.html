@@ -1,0 +1,45 @@
+<html>
+    <title>Sign-in</title>
+<body>
+    <label for="emailAddress">Email Address:</label>
+    <input type="text" id="emailAddress" name="emailAddress"><br><br>
+    <label for="password">Password:</label>
+    <input type="text" id="password" name="password" type="password"><br><br>
+    <button id="signin" onclick="signin()">Log in with email</button><br><br>
+    <label id="error"></label>
+    No account? <a href="/signup">Sign up</a>.
+    <script type="text/javascript">
+        // the signin handler
+        function signin() {
+            // clear the error text
+            document.getElementById("error").textContent = ""
+            // obtain the the email address and password the user entered
+            var emailAddress = document.getElementById("emailAddress").value
+            var password = document.getElementById("password").value
+            // POST to the signin endpoint
+            fetch("/v1/signin", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify({
+                    emailAddress,
+                    password
+                })
+            }).then(response => {
+                if( !response.ok ) {
+                    // if call failed, display the error
+                    response.text().then(value => {
+                        document.getElementById("error").textContent = value
+                    })                    
+                } else {
+                    // otherwise, navigate to the app
+                    window.location.href = "/app"
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+    </script>
+</body>
+</html>

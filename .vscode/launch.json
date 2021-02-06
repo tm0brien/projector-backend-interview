@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [                
+        {            
+            "name": "Projector Backend Interview",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run-script", "start"],
+            "localRoot": "${workspaceFolder}/bundles",
+            "remoteRoot": "/workspace/bundles",
+            "outFiles": ["/workspace/bundles/*.js"],
+            "sourceMapPathOverrides": {
+                "webpack:///./~/*": "${workspaceRoot}/node_modules/*",
+                "webpack:///./*": "${workspaceRoot}/src/*",
+                "webpack:///*": "*"
+            },            
+        }
+    ]
+}

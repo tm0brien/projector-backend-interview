@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      - ..:/workspace:cached
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+    network_mode: service:db
+
+  cloudserver:
+    image: zenko/cloudserver:8.2.6
+    restart: unless-stopped
+    volumes:
+      - cloudserver-data:/data
+    environment:
+      ENDPOINT: localhost
+      S3BACKEND: file
+      S3DATAPATH: /data
+      S3METADATAPATH: /data         
+      REMOTE_MANAGEMENT_DISABLE: "1"
+      SCALITY_ACCESS_KEY_ID: accessKey1
+      SCALITY_SECRET_ACCESS_KEY: verySecretKey1
+      
+    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+    network_mode: service:db
+
+  db:
+    image: mysql:8
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: project
+      MYSQL_USER: project
+      MYSQL_PASSWORD: project
+
+volumes:
+  mysql-data:
+  cloudserver-data:

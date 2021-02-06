@@ -1,0 +1,36 @@
+{
+    "typescript.format.enable": false,
+    "javascript.format.enable": false,
+    "eslint.options": {
+        "configFile": ".eslintrc.js"
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "search.exclude": {
+        "**/.cache/**": true,
+        "**/bundles": true,    
+        "**/node_modules": true,
+    },
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true,
+        "**/.cache/**": true,
+    },
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "typescript.preferences.importModuleSpecifierEnding": "minimal",
+    "files.exclude": {
+        "**/node_modules/**": true,
+        "**/.cache/**": true,
+        ".eslintignore": true,
+        ".eslintrc.js": true,
+        ".gitignore": true,
+        ".prettierrc.js": true,
+        "babel.config.js": true,
+        //".devcontainer": true,
+        "tsconfig.json": true,
+        "webpack.config.js": true,
+    },
+}

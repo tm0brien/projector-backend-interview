@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "outDir": "./bundles",
+        "allowJs": true,
+        "target": "es2015",
+        "lib": [
+            "es5",
+            "dom",
+            "scripthost",
+            "es6",
+            "es2017"
+        ],
+        "module": "esnext",
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "baseUrl": "./src/",
+        "pretty": true,
+        "esModuleInterop": true,
+        "isolatedModules": false,
+        "strictNullChecks": true,
+        "sourceMap": true,
+        "noImplicitThis": true,
+    },
+    "exclude": [
+        "build",
+        "bundles"
+    ]
+}
